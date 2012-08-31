@@ -152,7 +152,6 @@
 (add-to-list 'auto-mode-alist '("\\.vapi$" . vala-mode))
 (add-to-list 'file-coding-system-alist '("\\.vala$" . utf-8))
 (add-to-list 'file-coding-system-alist '("\\.vapi$" . utf-8))
-
 ;; lua mode
 (require 'lua-mode)
 
@@ -184,3 +183,24 @@
 
 ;; Enabling the server mode by default
 (server-mode)
+
+
+(add-to-list 'load-path "~/.emacs.d/elisp/esk")
+(require 'esk)
+
+
+(global-set-key "\M-s" 'esk-find-file)
+
+ (when (load "flymake" t)
+  (defun flymake-pyflakes-init ()
+    (let* ((temp-file (flymake-init-create-temp-buffer-copy
+               'flymake-create-temp-inplace))
+       (local-file (file-relative-name
+            temp-file
+            (file-name-directory buffer-file-name))))
+      (list "/usr/local/share/python/flake8"  (list local-file))))
+   (add-to-list 'flymake-allowed-file-name-masks
+             '("\\.py\\'" flymake-pyflakes-init)))
+(add-hook 'find-file-hook 'flymake-find-file-hook)
+(add-hook 'python-mode-hook 'flymake-mode)
+
