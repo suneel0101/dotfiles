@@ -1,0 +1,15 @@
+;; Emacs-W3 HTTP cookies file
+;; Automatically generated file!!! DO NOT EDIT!!!
+
+(setq url-cookie-storage
+ '(("yipit.com"
+  [url-cookie "_yips" "0" "21-Oct-2012 14:37:09.00 GMT" "/" "yipit.com" nil]
+  [url-cookie "Max-Age" "2592000" "21-Oct-2012 14:37:09.00 GMT" "/" "yipit.com" nil]))
+)
+(setq url-cookie-secure-storage
+ 'nil)
+
+;; Local Variables:
+;; version-control: never
+;; no-byte-compile: t
+;; End:

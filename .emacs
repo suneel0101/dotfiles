@@ -14,6 +14,11 @@
 ;; encoding
 (setq current-language-environment "UTF-8")
 
+(custom-set-variables
+ '(js2-basic-offset 2)
+ '(js2-bounce-indent-p t)
+)
+
 ;; setting up a color theme
 (add-to-list 'load-path "~/.emacs.d/elisp/color-theme")
 (require 'color-theme)
@@ -27,9 +32,6 @@
 
 ;; Always do syntax highlighting
 (global-font-lock-mode 1)
-
-;; Font face/size
-(add-to-list 'default-frame-alist '(font . "6x13"))
 
 ;;; Also highlight parens
 (setq show-paren-delay 0 show-paren-style 'parenthesis)
@@ -190,20 +192,34 @@
 
 
 (global-set-key "\M-s" 'esk-find-file)
+(global-set-key "\M-S" 'esk-find-in-project)
 
- (when (load "flymake" t)
-  (defun flymake-pyflakes-init ()
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-               'flymake-create-temp-inplace))
-       (local-file (file-relative-name
-            temp-file
-            (file-name-directory buffer-file-name))))
-      (list "pyflakes"  (list local-file))))
-   (add-to-list 'flymake-allowed-file-name-masks
-             '("\\.py\\'" flymake-pyflakes-init)))
-(add-hook 'find-file-hook 'flymake-find-file-hook)
-(add-hook 'python-mode-hook 'flymake-mode)
 
 (require 'flymake-cursor)
+(when (load "flymake" t)
+  (defun flymake-pyflakes-init ()
+    (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                       'flymake-create-temp-inplace))
+           (local-file (file-relative-name
+                        temp-file
+                        (file-name-directory buffer-file-name))))
+      (list "flake8"  (list local-file))))
+  (add-to-list 'flymake-allowed-file-name-masks
+               '("\\.py\\'" flymake-pyflakes-init)))
+(setq flymake-gui-warnings-enabled nil)
+(add-hook 'find-file-hook 'flymake-find-file-hook)
+;; (add-to-list
+;;  'flymake-allowed-file-name-masks
+;;  '(".+\\.py$'" flymake-pyflakes-init))
 
 (require 'magit)
+
+
+(add-to-list 'load-path "~/.emacs.d/mo-git-blame")
+(autoload 'mo-git-blame-file "mo-git-blame" nil t)
+(autoload 'mo-git-blame-current "mo-git-blame" nil t)
+(global-set-key [?\C-c ?g ?c] 'mo-git-blame-current)
+(global-set-key [?\C-c ?g ?f] 'mo-git-blame-file)
+
+(add-to-list 'load-path "~/.emacs.d/elisp/hackernews.el")
+(require 'hackernews)
