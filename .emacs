@@ -220,6 +220,3 @@
 (autoload 'mo-git-blame-current "mo-git-blame" nil t)
 (global-set-key [?\C-c ?g ?c] 'mo-git-blame-current)
 (global-set-key [?\C-c ?g ?f] 'mo-git-blame-file)
-
-(add-to-list 'load-path "~/.emacs.d/elisp/hackernews.el")
-(require 'hackernews)
