@@ -14,11 +14,6 @@
 ;; encoding
 (setq current-language-environment "UTF-8")
 
-(custom-set-variables
- '(js2-basic-offset 2)
- '(js2-bounce-indent-p t)
-)
-
 ;; setting up a color theme
 (add-to-list 'load-path "~/.emacs.d/elisp/color-theme")
 (require 'color-theme)
@@ -122,19 +117,17 @@
 
 ;; Mode Configuration
 
+;; js config
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js-mode))
+
 ;; css config
 (setq cssm-indent-function #'cssm-c-style-indenter)
 (setq cssm-indent-level 4)
 
-;; javascript config
-(setq js2-consistent-level-indent-inner-bracket-p 1)
-(setq js2-pretty-multiline-decl-indentation-p 1)
-(autoload 'js2-mode "js2-mode" nil t)
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-
 ;; sass and haml mode
 (require 'sass-mode)
 (add-to-list 'auto-mode-alist '("\\.sass$" . sass-mode))
+(setq sass-indent-offset 4)
 (add-to-list 'auto-mode-alist '("\\.scss$" . sass-mode))
 
 ;; less mode
@@ -220,3 +213,20 @@
 (autoload 'mo-git-blame-current "mo-git-blame" nil t)
 (global-set-key [?\C-c ?g ?c] 'mo-git-blame-current)
 (global-set-key [?\C-c ?g ?f] 'mo-git-blame-file)
+
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+
+(defun web-mode-hook ()
+  (setq web-mode-markup-indent-offset 4)
+  (setq web-mode-css-indent-offset 4)
+  (setq web-mode-code-indent-offset 4)
+)
+(add-hook 'web-mode-hook  'web-mode-hook)
