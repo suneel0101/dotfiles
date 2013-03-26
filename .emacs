@@ -14,13 +14,16 @@
 ;; encoding
 (setq current-language-environment "UTF-8")
 
+;; No f*cking bell
+(setq ring-bell-function 'ignore)
+
 ;; setting up a color theme
 (add-to-list 'load-path "~/.emacs.d/elisp/color-theme")
 (require 'color-theme)
 (eval-after-load "color-theme"
  '(progn
     (color-theme-initialize)
-    (color-theme-tty-dark)))
+    (color-theme-lincoln)))
 
 ;; ssh and local sudo/su
 (require 'tramp)
@@ -230,3 +233,4 @@
   (setq web-mode-code-indent-offset 4)
 )
 (add-hook 'web-mode-hook  'web-mode-hook)
+(set-face-attribute 'default nil :height 140)
