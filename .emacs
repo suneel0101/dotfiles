@@ -17,6 +17,29 @@
 ;; No f*cking bell
 (setq ring-bell-function 'ignore)
 
+;; Google function
+(defun google ()
+  "Google the selected region if any, display a query prompt otherwise."
+  (interactive)
+  (browse-url
+   (concat
+    "http://www.google.com/search?ie=utf-8&oe=utf-8&q="
+    (url-hexify-string (if mark-active
+         (buffer-substring (region-beginning) (region-end))
+       (read-string "Google: "))))))
+
+
+
+
+;; Setting highlight indentation
+;; (require 'highlight-indentation)
+;; (add-hook 'python-mode-hook 'highlight-indentation-mode)
+;; (add-hook 'web-mode-hook 'highlight-indentation-mode)
+;; (set-default 'cursor-type 'box)
+;; (set-face-background 'highlight-indentation-face "#eee")
+;; (set-face-attribute 'highlight-indentation-face nil :width 'condensed)
+;; (set-face-background 'highlight-indentation-current-column-face "#c3b3b3")
+
 ;; setting up a color theme
 (add-to-list 'load-path "~/.emacs.d/elisp/color-theme")
 (require 'color-theme)
@@ -189,7 +212,6 @@
 
 (global-set-key "\M-s" 'esk-find-file)
 (global-set-key "\M-S" 'esk-find-in-project)
-
 
 (require 'flymake-cursor)
 (when (load "flymake" t)
