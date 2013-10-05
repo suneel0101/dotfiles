@@ -17,29 +17,6 @@
 ;; No f*cking bell
 (setq ring-bell-function 'ignore)
 
-;; Google function
-(defun google ()
-  "Google the selected region if any, display a query prompt otherwise."
-  (interactive)
-  (browse-url
-   (concat
-    "http://www.google.com/search?ie=utf-8&oe=utf-8&q="
-    (url-hexify-string (if mark-active
-         (buffer-substring (region-beginning) (region-end))
-       (read-string "Google: "))))))
-
-
-
-
-;; Setting highlight indentation
-;; (require 'highlight-indentation)
-;; (add-hook 'python-mode-hook 'highlight-indentation-mode)
-;; (add-hook 'web-mode-hook 'highlight-indentation-mode)
-;; (set-default 'cursor-type 'box)
-;; (set-face-background 'highlight-indentation-face "#eee")
-;; (set-face-attribute 'highlight-indentation-face nil :width 'condensed)
-;; (set-face-background 'highlight-indentation-current-column-face "#c3b3b3")
-
 ;; setting up a color theme
 (add-to-list 'load-path "~/.emacs.d/elisp/color-theme")
 (require 'color-theme)
@@ -118,16 +95,6 @@
   (global-set-key [kp-delete] 'delete-char) ;; sets fn-delete to be right-delete
   (menu-bar-mode 1))
 
-;; scrolling other window
-;(global-set-key "\M-\C-n" 'scroll-other-window)
-;(global-set-key "\M-\C-p" 'scroll-other-window-down)
-
-;; new window
-;(global-set-key "\C-x\C-n"  'make-frame)
-
-;; other window
-;(global-set-key [C-tab] 'other-window)
-
 ;; Adding marmalade as a repo to the package module
 (require 'package)
 (add-to-list
@@ -167,32 +134,12 @@
   "Major mode for editing Markdown files" t)
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 
-;; vala mode
-(autoload 'vala-mode "vala-mode" "Major mode for editing Vala code." t)
-(add-to-list 'auto-mode-alist '("\\.vala$" . vala-mode))
-(add-to-list 'auto-mode-alist '("\\.vapi$" . vala-mode))
-(add-to-list 'file-coding-system-alist '("\\.vala$" . utf-8))
-(add-to-list 'file-coding-system-alist '("\\.vapi$" . utf-8))
-;; lua mode
-(require 'lua-mode)
-
-;; CoffeScript mode
-(require 'coffee-mode)
-(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
-(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
-(defun coffee-custom () "coffee-mode-hook"
-  (set (make-local-variable 'tab-width) 2))
-(add-hook 'coffee-mode-hook '(lambda() (coffee-custom)))
-
 ;; Auto complete
 (require 'auto-complete)
 (global-auto-complete-mode t)
 (setq ac-dwim 2)
 (define-key ac-complete-mode-map "\C-n" 'ac-next)
 (define-key ac-complete-mode-map "\C-p" 'ac-previous)
-
-;; Muttrc mode
-(require 'muttrc-mode)
 
 ;; Configuring the dropdown list, submodule used by yasnippet
 (require 'dropdown-list)
@@ -256,3 +203,5 @@
 )
 (add-hook 'web-mode-hook  'web-mode-hook)
 (set-face-attribute 'default nil :height 140)
+
+(add-hook 'before-save-hook 'whitespace-cleanup)
